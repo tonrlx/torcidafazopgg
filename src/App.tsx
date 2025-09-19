@@ -1,12 +1,11 @@
-import React from 'react';
 
 // Modular imports
 import { Header, Navigation, TransitionOverlay, Footer } from './modules/ui';
 import { 
   HomeSection, 
   AgendaSection, 
-  LinesSection, 
   NewsSection, 
+  FreeFireSection,
   StoreSection 
 } from './modules/sections';
 import { useTabNavigation, useMenu, TABS } from './modules/core';
@@ -49,7 +48,7 @@ function App() {
       <main className="pt-20 pb-16 w-full">
         {activeTab === TABS.HOME && <HomeSection />}
         {activeTab === TABS.AGENDA && <AgendaSection />}
-        {activeTab === TABS.LINES && <LinesSection />}
+        {activeTab === TABS.LINES && <FreeFireSection />}
         {activeTab === TABS.NEWS && <NewsSection />}
         {activeTab === TABS.SOU_PAIN && <StoreSection />}
       </main>

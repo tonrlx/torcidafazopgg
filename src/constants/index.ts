@@ -20,8 +20,8 @@ export const ANIMATION_DURATION = {
 
 export const TABS = {
   HOME: 'home',
-  AGENDA: 'agenda',
   LINES: 'lines',
+  SOU_PAIN: 'sou-pain',
   NEWS: 'news',
-  SOU_PAIN: 'sou-pain'
+  AGENDA: 'agenda'
 } as const;

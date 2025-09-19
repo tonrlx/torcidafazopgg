@@ -69,25 +69,6 @@ const NewsSidebar: React.FC = () => {
         </div>
       </div>
 
-      {/* Fórum de discussão */}
-      <div className="bg-black border border-red-600 p-6">
-        <h3 className="text-xl font-bold mb-4 text-white">Fórum de Resenhas e Discussões</h3>
-        <div className="bg-black border border-red-600 p-4">
-          <p className="text-white text-center mb-4">
-            Compartilhe sua opinião e participe das discussões!
-          </p>
-          <div className="text-center">
-            <a
-              href={SOCIAL_LINKS.forum}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 transition-all duration-300 glow-red"
-            >
-              Enviar Resenha
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

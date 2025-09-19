@@ -10,3 +10,4 @@ export { default as ImageSlider } from '../../components/ImageSlider';
 export { default as TransitionOverlay } from '../../components/TransitionOverlay';
 export { default as OptimizedImage } from '../../components/OptimizedImage';
 export { default as NewsSidebar } from '../../components/NewsSidebar';
+export { default as LiveSection } from '../../components/LiveSection';

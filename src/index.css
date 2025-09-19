@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevenir tradução automática */
+* {
+  translate: no;
+}
+
 * {
   font-family: 'Montserrat', sans-serif;
 }
@@ -105,4 +110,19 @@ header {
   z-index: 9999 !important;
   width: 100% !important;
   background-color: #000000 !important;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

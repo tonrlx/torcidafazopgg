@@ -18,6 +18,9 @@ export interface AgendaEvent {
   event: string;
   platform: string;
   championship: string;
+  game: 'CS2' | 'LoL';
+  streamUrl: string;
+  hltvUrl: string;
 }
 
 export interface NewsArticle {
@@ -59,4 +62,58 @@ export interface ImageSliderProps {
 
 export interface TransitionOverlayProps {
   isVisible: boolean;
+}
+
+export interface LiveChannel {
+  id: string;
+  name: string;
+  platform: 'twitch' | 'youtube' | 'konect';
+  url: string;
+  photo: string;
+}
+
+export interface FreeFirePlayer {
+  id: string;
+  name: string;
+  nickname: string;
+  position: string;
+  line: 'mobile' | 'emulator' | 'lol' | 'cs2';
+  stats: {
+    kills: number;
+    deaths: number;
+    assists: number;
+    kd: number;
+    matches: number;
+    wins: number;
+    winRate: number;
+    avgDamage: number;
+    headshots: number;
+    headshotRate: number;
+    avgSurvivalTime: number;
+    topFinishes: number;
+    tournaments: number;
+    prizeMoney: number;
+  };
+  achievements: string[];
+  socialMedia: {
+    instagram?: string;
+    twitter?: string;
+    youtube?: string;
+  };
+  joinDate: string;
+  lastUpdate: string;
+}
+
+export interface FreeFireLine {
+  id: string;
+  name: string;
+  type: 'mobile' | 'emulator' | 'lol' | 'cs2';
+  players: FreeFirePlayer[];
+  totalStats: {
+    totalKills: number;
+    totalMatches: number;
+    totalWins: number;
+    avgWinRate: number;
+    totalPrizeMoney: number;
+  };
 }

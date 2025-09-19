@@ -32,12 +32,20 @@ const Header: React.FC<HeaderProps> = ({ isMenuOpen, setIsMenuOpen, activeTab, o
             HOME
           </button>
           <button
-            onClick={() => onTabChange('agenda')}
+            onClick={() => onTabChange('lines')}
             className={`font-semibold text-lg transition-colors duration-300 ${
-              activeTab === 'agenda' ? 'text-red-600' : 'text-white hover:text-red-600'
+              activeTab === 'lines' ? 'text-red-600' : 'text-white hover:text-red-600'
             }`}
           >
-            AGENDA
+            LINES
+          </button>
+          <button
+            onClick={() => onTabChange('sou-pain')}
+            className={`font-semibold text-lg transition-colors duration-300 ${
+              activeTab === 'sou-pain' ? 'text-red-600' : 'text-white hover:text-red-600'
+            }`}
+          >
+            LOJA
           </button>
           <button
             onClick={() => onTabChange('news')}
@@ -48,12 +56,12 @@ const Header: React.FC<HeaderProps> = ({ isMenuOpen, setIsMenuOpen, activeTab, o
             NOTÍCIAS
           </button>
           <button
-            onClick={() => onTabChange('sou-pain')}
+            onClick={() => onTabChange('agenda')}
             className={`font-semibold text-lg transition-colors duration-300 ${
-              activeTab === 'sou-pain' ? 'text-red-600' : 'text-white hover:text-red-600'
+              activeTab === 'agenda' ? 'text-red-600' : 'text-white hover:text-red-600'
             }`}
           >
-            LOJA
+            AGENDA
           </button>
         </nav>
         

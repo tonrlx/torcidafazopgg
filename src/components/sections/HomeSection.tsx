@@ -1,11 +1,17 @@
 import React from 'react';
 import { MessageCircle, Instagram } from 'lucide-react';
 import ImageSlider from '../ImageSlider';
+import LiveSection from '../LiveSection';
+import FloatingNewsWidget from '../FloatingNewsWidget';
 import { SLIDES, SOCIAL_LINKS } from '../../constants';
 
 const HomeSection: React.FC = () => {
+
   return (
     <div className="fade-in">
+      {/* Widget flutuante de notícias */}
+      <FloatingNewsWidget />
+      
       <ImageSlider slides={SLIDES} />
 
       {/* Slogan */}
@@ -74,6 +80,9 @@ const HomeSection: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Seção de Canais */}
+      <LiveSection />
     </div>
   );
 };

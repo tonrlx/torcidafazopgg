@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Calendar, Newspaper, ShoppingBag } from 'lucide-react';
+import { Home, Calendar, Newspaper, Smartphone, ShoppingBag } from 'lucide-react';
 import { NavigationProps } from '../types';
 
 const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, activeTab, onTabChange }) => {
@@ -19,15 +19,26 @@ const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, activeTab, onTabCha
             <span>HOME</span>
           </button>
           <button
-            onClick={() => onTabChange('agenda')}
+            onClick={() => onTabChange('lines')}
             className={`w-full text-left p-4 border transition-all duration-300 flex items-center space-x-3 font-semibold ${
-              activeTab === 'agenda' 
+              activeTab === 'lines' 
                 ? 'bg-red-600 border-red-600 text-white' 
                 : 'bg-black border-gray-600 text-white hover:bg-gray-700'
             }`}
           >
-            <Calendar size={20} />
-            <span>AGENDA</span>
+            <Smartphone size={20} />
+            <span>LINES</span>
+          </button>
+          <button
+            onClick={() => onTabChange('sou-pain')}
+            className={`w-full text-left p-4 border transition-all duration-300 flex items-center space-x-3 font-semibold ${
+              activeTab === 'sou-pain' 
+                ? 'bg-red-600 border-red-600 text-white' 
+                : 'bg-black border-gray-600 text-white hover:bg-gray-700'
+            }`}
+          >
+            <ShoppingBag size={20} />
+            <span>LOJA</span>
           </button>
           <button
             onClick={() => onTabChange('news')}
@@ -41,15 +52,15 @@ const Navigation: React.FC<NavigationProps> = ({ isMenuOpen, activeTab, onTabCha
             <span>NOTÍCIAS</span>
           </button>
           <button
-            onClick={() => onTabChange('sou-pain')}
+            onClick={() => onTabChange('agenda')}
             className={`w-full text-left p-4 border transition-all duration-300 flex items-center space-x-3 font-semibold ${
-              activeTab === 'sou-pain' 
+              activeTab === 'agenda' 
                 ? 'bg-red-600 border-red-600 text-white' 
                 : 'bg-black border-gray-600 text-white hover:bg-gray-700'
             }`}
           >
-            <ShoppingBag size={20} />
-            <span>LOJA</span>
+            <Calendar size={20} />
+            <span>AGENDA</span>
           </button>
         </nav>
       </div>
