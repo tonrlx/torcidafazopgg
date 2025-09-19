@@ -34,8 +34,8 @@ export const CDN_CONFIG = {
 
 export const ASSETS = {
   // Logos and branding
-  logo: '/images/TORCIDA.png.png',
-  transition: '/images/TRAN1.png.png',
+  logo: '/TORCIDA.png',
+  transition: '/images/TRAN1.png',
   
   // Slider images
   slides: {
