@@ -182,7 +182,7 @@ const FreeFireSection: React.FC = () => {
             {/* Players Grid - Collapsible */}
             {expandedLines[line.id] && (
               <div className="px-6 pb-6">
-                <div className="grid grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                   {line.players.map((player) => (
                     <div key={player.id} className="bg-black p-6 text-center">
                       {/* Player Photo */}

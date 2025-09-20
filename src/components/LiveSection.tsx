@@ -13,7 +13,7 @@ const LiveSection: React.FC = () => {
         CANAIS OFICIAIS
       </h2>
       
-      <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto">
         {liveChannels.map((channel) => (
           <div key={channel.id} className="bg-black border border-gray-600 p-3 md:p-6 hover:border-red-600 transition-colors duration-300 text-center">
             {/* Foto do canal */}

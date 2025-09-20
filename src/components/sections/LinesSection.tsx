@@ -24,7 +24,7 @@ const LinesSection: React.FC = () => {
       {/* LOL */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-6 text-red-600">League of Legends</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {playersData.lol.map(renderPlayerCard)}
         </div>
       </section>
@@ -32,7 +32,7 @@ const LinesSection: React.FC = () => {
       {/* CS */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-6 text-red-600">Counter-Strike</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {playersData.cs.map(renderPlayerCard)}
         </div>
       </section>
