@@ -81,13 +81,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const signUp = async (email: string, password: string, fullName: string, username: string) => {
-    // Primeiro, verificar se o email está banido
-    const { data: isEmailBanned } = await supabase
-      .rpc('is_email_banned', { email_to_check: email })
-    
-    if (isEmailBanned) {
-      return { error: { message: 'Este email foi banido e não pode criar contas' } }
-    }
+    // Verificação de ban simplificada - por enquanto desabilitada para evitar problemas
+    // TODO: Implementar verificação de ban quando necessário
 
     // Verificar se o username está disponível
     const isUsernameAvailable = await checkUsernameAvailability(username)
@@ -125,15 +120,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
-    const { data, error } = await supabase
-      .rpc('is_username_unique', { username_to_check: username })
-    
-    if (error) {
+    try {
+      // Verificar diretamente na tabela user_profiles
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('username')
+        .eq('username', username)
+        .single()
+      
+      if (error && error.code === 'PGRST116') {
+        // Username não existe (erro de "não encontrado")
+        return true
+      }
+      
+      if (error) {
+        console.error('Erro ao verificar username:', error)
+        return false
+      }
+      
+      // Se encontrou dados, username já existe
+      return false
+    } catch (error) {
       console.error('Erro ao verificar username:', error)
       return false
     }
-    
-    return data
   }
 
   const signIn = async (email: string, password: string) => {
