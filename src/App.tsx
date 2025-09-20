@@ -77,7 +77,7 @@ function App() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 bg-black border border-gray-600 transition-all duration-300 hover:bg-gray-700"
+              className="p-3 bg-transparent transition-all duration-300 hover:bg-gray-800"
               aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
             >
               {isMenuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
