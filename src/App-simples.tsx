@@ -1,5 +1,4 @@
-
-// Versão funcional - com todas as seções
+// Versão simplificada para debug
 import { HomeSection, NewsSection, FreeFireSection, AgendaSection, StoreSection } from './modules/sections';
 import { useTabNavigation, useMenu, TABS } from './modules/core';
 import { Menu, X } from 'lucide-react';
@@ -7,20 +6,14 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginForm from './components/auth/LoginForm';
 import RegisterForm from './components/auth/RegisterForm';
 import UserAvatar from './components/UserAvatar';
-// import ModerationMessage from './components/ModerationMessage';
-// import ModerationPanel from './components/ModerationPanel';
-// import SeloP from './components/SeloP';
-// import { useModeration } from './hooks/useModeration';
 import { useState } from 'react';
 
 function AppContent() {
   const { activeTab, isTransitioning, handleTabChange } = useTabNavigation();
   const { isMenuOpen, setIsMenuOpen, closeMenu } = useMenu();
   const { user, profile, signOut } = useAuth();
-  // const { moderationStatus, isModerator } = useModeration();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  // const [showModerationPanel, setShowModerationPanel] = useState(false);
 
   const handleTabChangeWithMenu = (tab: string) => {
     handleTabChange(tab);
@@ -98,16 +91,6 @@ function AppContent() {
                 <span className="text-white text-sm">
                   Olá, {profile?.username || user.email?.split('@')[0]}
                 </span>
-                {/* {isModerator && (
-                  <button
-                    onClick={() => setShowModerationPanel(true)}
-                    className="flex items-center space-x-1 bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-1.5 text-sm transition-colors duration-300"
-                    title="Painel de Moderação"
-                  >
-                    <SeloP size="sm" />
-                    <span>MOD</span>
-                  </button>
-                )} */}
                 <button 
                   onClick={signOut}
                   className="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-1.5 text-sm transition-colors duration-300"
@@ -302,21 +285,6 @@ function AppContent() {
           }}
         />
       )}
-
-      {/* Painel de Moderação */}
-      {/* {showModerationPanel && (
-        <ModerationPanel 
-          onClose={() => setShowModerationPanel(false)}
-        />
-      )} */}
-
-      {/* Mensagem de Ban/Suspensão */}
-      {/* <ModerationMessage
-        isBanned={moderationStatus.isBanned}
-        isSuspended={moderationStatus.isSuspended}
-        reason={moderationStatus.banReason || moderationStatus.suspensionExpires}
-        expiresAt={moderationStatus.suspensionExpires}
-      /> */}
     </div>
   );
 }

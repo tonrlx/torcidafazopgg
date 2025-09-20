@@ -147,18 +147,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const signIn = async (emailOrUsername: string, password: string) => {
+    console.log('🔍 Tentando login com:', emailOrUsername)
+    
     // Primeiro, verificar se é um username ou email
     let email = emailOrUsername
     
     // Se não contém @, é um username - buscar o email correspondente
     if (!emailOrUsername.includes('@')) {
+      console.log('🔍 Buscando email para username:', emailOrUsername)
+      
       const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .select('id')
         .eq('username', emailOrUsername)
         .single()
       
+      console.log('📊 Resultado da busca do perfil:', { profile, profileError })
+      
       if (profileError || !profile) {
+        console.log('❌ Perfil não encontrado')
         return { error: { message: 'Usuário não encontrado' } }
       }
       
@@ -169,17 +176,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('id', profile.id)
         .single()
       
+      console.log('📊 Resultado da busca do email:', { userData, userError })
+      
       if (userError || !userData) {
+        console.log('❌ Email não encontrado')
         return { error: { message: 'Usuário não encontrado' } }
       }
       
       email = userData.email
+      console.log('✅ Email encontrado:', email)
     }
     
-    const { error } = await supabase.auth.signInWithPassword({
+    console.log('🔐 Tentando login com email:', email)
+    
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
+    
+    console.log('📊 Resultado do login:', { data, error })
+    
     return { error }
   }
 
