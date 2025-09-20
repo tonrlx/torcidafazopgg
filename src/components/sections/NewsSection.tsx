@@ -72,30 +72,6 @@ const NewsSection: React.FC = () => {
 
   return (
       <div className="min-h-screen bg-black text-white">
-        {/* Header fixo */}
-        <header className="bg-black border-b border-gray-600 p-4 sticky top-0 z-50">
-          <div className="container mx-auto flex items-center justify-between">
-            <button
-              onClick={() => setExpandedPost(null)}
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft size={20} />
-              Voltar
-            </button>
-            <div className="flex items-center gap-3">
-              <img
-                src="/images/TORCIDA.png.png"
-                alt="Torcida Faz o P"
-                className="h-8 w-auto"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-              <h1 className="text-xl font-bold text-white">REDAÇÃO TFP</h1>
-            </div>
-            <div className="w-20"></div> {/* Espaçador para centralizar */}
-          </div>
-        </header>
 
         {/* Conteúdo do artigo */}
         <main className="container mx-auto px-4 py-8 max-w-4xl">
