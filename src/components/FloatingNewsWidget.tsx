@@ -11,6 +11,9 @@ const FloatingNewsWidget: React.FC = () => {
     const recentPosts = getRecentPosts(1);
     if (recentPosts.length > 0) {
       setLatestPost(recentPosts[0]);
+    } else {
+      // Se não há notícias, não mostrar o widget
+      setIsVisible(false);
     }
   }, []);
 
