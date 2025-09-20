@@ -4,7 +4,7 @@ import { getRecentPosts } from '../data/blogData';
 
 const FloatingNewsWidget: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
   const [latestPost, setLatestPost] = useState<any>(null);
 
   useEffect(() => {
@@ -17,15 +17,7 @@ const FloatingNewsWidget: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      setIsMinimized(scrollTop > 100);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Removido o scroll listener - widget sempre começa minimizado
 
   if (!isVisible) {
     return null;
