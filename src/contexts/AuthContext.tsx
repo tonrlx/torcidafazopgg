@@ -146,7 +146,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (emailOrUsername: string, password: string) => {
+    // Primeiro, verificar se é um username ou email
+    let email = emailOrUsername
+    
+    // Se não contém @, é um username - buscar o email correspondente
+    if (!emailOrUsername.includes('@')) {
+      const { data: profile, error: profileError } = await supabase
+        .from('user_profiles')
+        .select('id')
+        .eq('username', emailOrUsername)
+        .single()
+      
+      if (profileError || !profile) {
+        return { error: { message: 'Usuário não encontrado' } }
+      }
+      
+      // Buscar o email do usuário na tabela auth.users
+      const { data: userData, error: userError } = await supabase
+        .from('auth.users')
+        .select('email')
+        .eq('id', profile.id)
+        .single()
+      
+      if (userError || !userData) {
+        return { error: { message: 'Usuário não encontrado' } }
+      }
+      
+      email = userData.email
+    }
+    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
