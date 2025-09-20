@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { useModeration } from '../hooks/useModeration'
 import { supabase, Comment } from '../lib/supabase'
 import { Heart, MessageCircle } from 'lucide-react'
 import UserAvatar from './UserAvatar'
@@ -14,6 +15,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId }) => {
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const { user } = useAuth()
+  const { moderationStatus } = useModeration()
 
   useEffect(() => {
     fetchComments()
@@ -42,6 +44,11 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user || !newComment.trim() || newComment.length > 100) return
+
+    // Verificar se usuário está banido ou suspenso
+    if (moderationStatus.isBanned || moderationStatus.isSuspended) {
+      return
+    }
 
     setSubmitting(true)
     const { error } = await supabase

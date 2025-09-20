@@ -81,7 +81,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const signUp = async (email: string, password: string, fullName: string, username: string) => {
-    // Primeiro, verificar se o username está disponível
+    // Primeiro, verificar se o email está banido
+    const { data: isEmailBanned } = await supabase
+      .rpc('is_email_banned', { email_to_check: email })
+    
+    if (isEmailBanned) {
+      return { error: { message: 'Este email foi banido e não pode criar contas' } }
+    }
+
+    // Verificar se o username está disponível
     const isUsernameAvailable = await checkUsernameAvailability(username)
     if (!isUsernameAvailable) {
       return { error: { message: 'Nome de usuário já está em uso' } }

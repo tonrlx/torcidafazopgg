@@ -43,12 +43,34 @@ CREATE TABLE IF NOT EXISTS comment_likes (
   UNIQUE(comment_id, user_id) -- Evita curtidas duplicadas
 );
 
+-- 5. Tabela de moderação (bans e suspensões)
+CREATE TABLE IF NOT EXISTS user_moderation (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  moderator_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  action_type TEXT NOT NULL CHECK (action_type IN ('ban', 'suspend')),
+  reason TEXT,
+  expires_at TIMESTAMP, -- NULL para ban permanente, data para suspensão
+  created_at TIMESTAMP DEFAULT NOW(),
+  is_active BOOLEAN DEFAULT TRUE
+);
+
+-- 6. Tabela de usuários especiais (Usuário Coringa)
+CREATE TABLE IF NOT EXISTS special_users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  role TEXT NOT NULL CHECK (role IN ('coringa', 'admin')),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
 -- 4. Políticas de segurança (Row Level Security)
 
 -- Habilitar RLS nas tabelas
 ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE comment_likes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_moderation ENABLE ROW LEVEL SECURITY;
+ALTER TABLE special_users ENABLE ROW LEVEL SECURITY;
 
 -- Políticas para perfis de usuários
 CREATE POLICY "Usuários podem ver perfis" ON user_profiles
@@ -82,6 +104,41 @@ CREATE POLICY "Usuários autenticados podem curtir" ON comment_likes
 
 CREATE POLICY "Usuários podem remover suas curtidas" ON comment_likes
   FOR DELETE USING (auth.uid() = user_id);
+
+-- Políticas para moderação
+CREATE POLICY "Usuários podem ver moderação própria" ON user_moderation
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Moderadores podem ver todas as moderações" ON user_moderation
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM special_users 
+      WHERE user_id = auth.uid() 
+      AND role IN ('coringa', 'admin')
+    )
+  );
+
+CREATE POLICY "Moderadores podem criar moderações" ON user_moderation
+  FOR INSERT WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM special_users 
+      WHERE user_id = auth.uid() 
+      AND role IN ('coringa', 'admin')
+    )
+  );
+
+-- Políticas para usuários especiais
+CREATE POLICY "Usuários especiais podem ver roles" ON special_users
+  FOR SELECT USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Apenas admins podem gerenciar usuários especiais" ON special_users
+  FOR ALL USING (
+    EXISTS (
+      SELECT 1 FROM special_users 
+      WHERE user_id = auth.uid() 
+      AND role = 'admin'
+    )
+  );
 
 -- 5. Função para atualizar contagem de curtidas automaticamente
 CREATE OR REPLACE FUNCTION update_comment_likes_count()
@@ -118,6 +175,59 @@ BEGIN
   RETURN NOT EXISTS (
     SELECT 1 FROM user_profiles 
     WHERE username = username_to_check
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+-- 8. Função para verificar se usuário está banido
+CREATE OR REPLACE FUNCTION is_user_banned(user_id_to_check UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM user_moderation 
+    WHERE user_id = user_id_to_check 
+    AND action_type = 'ban' 
+    AND is_active = TRUE
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+-- 9. Função para verificar se usuário está suspenso
+CREATE OR REPLACE FUNCTION is_user_suspended(user_id_to_check UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM user_moderation 
+    WHERE user_id = user_id_to_check 
+    AND action_type = 'suspend' 
+    AND is_active = TRUE
+    AND expires_at > NOW()
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+-- 10. Função para verificar se email está banido
+CREATE OR REPLACE FUNCTION is_email_banned(email_to_check TEXT)
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM user_moderation um
+    JOIN auth.users au ON um.user_id = au.id
+    WHERE au.email = email_to_check 
+    AND um.action_type = 'ban' 
+    AND um.is_active = TRUE
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+-- 11. Função para verificar se usuário é moderador
+CREATE OR REPLACE FUNCTION is_user_moderator(user_id_to_check UUID)
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM special_users 
+    WHERE user_id = user_id_to_check 
+    AND role IN ('coringa', 'admin')
   );
 END;
 $$ LANGUAGE plpgsql;
