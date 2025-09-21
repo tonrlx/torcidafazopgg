@@ -34,6 +34,9 @@ function AppContent() {
                         location.pathname.startsWith('/opiniao/') || 
                         location.pathname.startsWith('/analise/');
 
+  console.log('App - location.pathname:', location.pathname);
+  console.log('App - isArticleRoute:', isArticleRoute);
+
 
   const handleTabChangeWithMenu = (tab: string) => {
     handleTabChange(tab);

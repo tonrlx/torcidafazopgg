@@ -7,6 +7,9 @@ const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
+  console.log('ArticlePage - slug recebido:', slug);
+  console.log('ArticlePage - blogPosts disponíveis:', blogPosts.map(p => p.id));
+
   // Encontrar a matéria pelo slug
   const post = blogPosts.find(p => p.id === slug);
 
