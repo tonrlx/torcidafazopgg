@@ -7,6 +7,26 @@ const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
+  // Encontrar a matéria pelo slug
+  const post = blogPosts.find(p => p.id === slug);
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Matéria não encontrada</h1>
+          <p className="text-gray-400 mb-6">A matéria que você está procurando não existe.</p>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+          >
+            Voltar ao início
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Função para converter markdown simples para HTML
   const formatContent = (content: string) => {
     return content
@@ -33,26 +53,6 @@ const ArticlePage: React.FC = () => {
       default: return category;
     }
   };
-
-  // Encontrar a matéria pelo slug
-  const post = blogPosts.find(p => p.id === slug);
-
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Matéria não encontrada</h1>
-          <p className="text-gray-400 mb-6">A matéria que você está procurando não existe.</p>
-          <button
-            onClick={() => navigate('/')}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-          >
-            Voltar ao início
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black text-white">

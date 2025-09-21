@@ -34,6 +34,7 @@ function AppContent() {
                         location.pathname.startsWith('/opiniao/') || 
                         location.pathname.startsWith('/analise/');
 
+
   const handleTabChangeWithMenu = (tab: string) => {
     handleTabChange(tab);
     closeMenu();
