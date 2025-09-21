@@ -46,6 +46,12 @@ O SQL Editor do Supabase só aceita comandos SQL, não Markdown (```).
             margin-bottom: 40px;
             letter-spacing: 1px;
         }
+        .message {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
         .button { 
             background-color: #ff0000; 
             color: white; 
@@ -65,6 +71,10 @@ O SQL Editor do Supabase só aceita comandos SQL, não Markdown (```).
 <body>
     <div class="container">
         <div class="logo">Torcida Faz o P</div>
+        
+        <div class="message">
+            Ficamos muito felizes em ter você na <strong>MELHOR TORCIDA DO MUNDO</strong>
+        </div>
         
         <a href="{{ .ConfirmationURL }}" class="button">Confirmar Email</a>
     </div>
