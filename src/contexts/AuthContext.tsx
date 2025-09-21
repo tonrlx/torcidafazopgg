@@ -15,7 +15,7 @@ interface AuthContextType {
   session: Session | null
   profile: UserProfile | null
   loading: boolean
-  signUp: (email: string, password: string, fullName: string, username: string) => Promise<{ error: any }>
+  signUp: (email: string, password: string, fullName: string, username: string) => Promise<{ error: any, message?: string }>
   signIn: (email: string, password: string) => Promise<{ error: any }>
   signOut: () => Promise<void>
   checkUsernameAvailability: (username: string) => Promise<boolean>
@@ -94,6 +94,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`
+      }
     })
 
     if (error) {
@@ -114,6 +117,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.error('Erro ao criar perfil:', profileError)
         return { error: profileError }
       }
+
+      // Verificar se o email precisa ser confirmado
+      if (data.user && !data.user.email_confirmed_at) {
+        return { 
+          error: null, 
+          message: 'Conta criada com sucesso! Verifique seu email para confirmar a conta.' 
+        }
+      }
     }
 
     return { error: null }
@@ -122,7 +133,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
     try {
       // Verificar diretamente na tabela user_profiles
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('user_profiles')
         .select('username')
         .eq('username', username)
@@ -149,54 +160,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (emailOrUsername: string, password: string) => {
     console.log('🔍 Tentando login com:', emailOrUsername)
     
-    // Primeiro, verificar se é um username ou email
-    let email = emailOrUsername
-    
-    // Se não contém @, é um username - buscar o email correspondente
-    if (!emailOrUsername.includes('@')) {
-      console.log('🔍 Buscando email para username:', emailOrUsername)
-      
-      const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('id')
-        .eq('username', emailOrUsername)
-        .single()
-      
-      console.log('📊 Resultado da busca do perfil:', { profile, profileError })
-      
-      if (profileError || !profile) {
-        console.log('❌ Perfil não encontrado')
-        return { error: { message: 'Usuário não encontrado' } }
-      }
-      
-      // Buscar o email do usuário na tabela auth.users
-      const { data: userData, error: userError } = await supabase
-        .from('auth.users')
-        .select('email')
-        .eq('id', profile.id)
-        .single()
-      
-      console.log('📊 Resultado da busca do email:', { userData, userError })
-      
-      if (userError || !userData) {
-        console.log('❌ Email não encontrado')
-        return { error: { message: 'Usuário não encontrado' } }
-      }
-      
-      email = userData.email
-      console.log('✅ Email encontrado:', email)
-    }
-    
-    console.log('🔐 Tentando login com email:', email)
-    
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
+    // Se contém @, é um email - fazer login direto
+    if (emailOrUsername.includes('@')) {
+      console.log('🔐 Login com email direto')
+    const { error } = await supabase.auth.signInWithPassword({
+      email: emailOrUsername,
       password,
     })
     
-    console.log('📊 Resultado do login:', { data, error })
-    
+    console.log('📊 Resultado do login:', { error })
     return { error }
+    }
+    
+    // Se é username, precisamos buscar o email correspondente
+    console.log('🔍 Buscando email para username:', emailOrUsername)
+    
+    // Primeiro, buscar o perfil do usuário
+    const { data: profile, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('id, full_name')
+      .eq('username', emailOrUsername)
+      .single()
+    
+    console.log('📊 Resultado da busca do perfil:', { profile, profileError })
+    
+    if (profileError || !profile) {
+      console.log('❌ Perfil não encontrado')
+      return { error: { message: 'Usuário não encontrado' } }
+    }
+    
+    // Agora buscar o usuário na tabela auth.users usando a função admin
+    // Como não podemos acessar auth.users diretamente, vamos tentar um approach diferente
+    // Vamos usar o email que foi usado no cadastro (que deve estar no perfil)
+    
+    // Por enquanto, vamos retornar erro para username login até implementarmos uma solução melhor
+    console.log('❌ Login com username temporariamente desabilitado')
+    return { error: { message: 'Por favor, use seu email para fazer login' } }
   }
 
   const signOut = async () => {

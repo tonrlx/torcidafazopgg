@@ -11,7 +11,7 @@
 
 **Título do Email:**
 ```
-Bem-vindo à Torcida Faz o P! Confirme sua conta
+CONFIRMAÇÃO TORCIDAFAZOP
 ```
 
 **Conteúdo do Email (HTML):**
@@ -20,46 +20,53 @@ Bem-vindo à Torcida Faz o P! Confirme sua conta
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Confirmação de Conta - Torcida Faz o P</title>
+    <title>CONFIRMAÇÃO TORCIDAFAZOP</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #000; color: #fff; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; background-color: #111; border: 2px solid #ff0000; border-radius: 10px; padding: 30px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .logo { color: #ff0000; font-size: 24px; font-weight: bold; }
-        .button { background-color: #ff0000; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 20px 0; }
-        .footer { margin-top: 30px; text-align: center; color: #888; font-size: 12px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #000; 
+            color: #fff; 
+            margin: 0; 
+            padding: 20px; 
+            text-align: center;
+        }
+        .container { 
+            max-width: 400px; 
+            margin: 0 auto; 
+            background-color: #111; 
+            border: 2px solid #ff0000; 
+            border-radius: 10px; 
+            padding: 40px 20px; 
+        }
+        .logo { 
+            color: #ff0000; 
+            font-size: 28px; 
+            font-weight: bold; 
+            margin-bottom: 30px;
+        }
+        .button { 
+            background-color: #ff0000; 
+            color: white; 
+            padding: 20px 40px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            display: inline-block; 
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .button:hover {
+            background-color: #cc0000;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">🔥 TORCIDA FAZ O P</div>
-            <h1>Bem-vindo à nossa comunidade!</h1>
-        </div>
-        
-        <p>Olá!</p>
-        
-        <p>Obrigado por se cadastrar na <strong>Torcida Faz o P</strong> - o portal oficial da torcida da paiN Gaming!</p>
-        
-        <p>Para ativar sua conta e começar a participar das discussões, clique no botão abaixo:</p>
+        <div class="logo">🔥 TORCIDA FAZ O P</div>
         
         <div style="text-align: center;">
-            <a href="{{ .ConfirmationURL }}" class="button">CONFIRMAR MINHA CONTA</a>
-        </div>
-        
-        <p>Após confirmar, você poderá:</p>
-        <ul>
-            <li>✅ Comentar nas notícias</li>
-            <li>✅ Curtir e responder comentários</li>
-            <li>✅ Participar das discussões da comunidade</li>
-            <li>✅ Acompanhar tudo sobre a paiN Gaming</li>
-        </ul>
-        
-        <p>Se você não criou esta conta, pode ignorar este email.</p>
-        
-        <div class="footer">
-            <p>🔥 Torcida Faz o P - Portal Oficial da Torcida paiN Gaming</p>
-            <p>Este email foi enviado automaticamente, não responda.</p>
+            <a href="{{ .ConfirmationURL }}" class="button">CONFIRMAR E-MAIL</a>
         </div>
     </div>
 </body>
@@ -70,15 +77,26 @@ Bem-vindo à Torcida Faz o P! Confirme sua conta
 
 **Subject (Assunto):**
 ```
-🔥 Confirme sua conta na Torcida Faz o P
+CONFIRMAÇÃO TORCIDAFAZOP
 ```
 
 **Redirect URL (após confirmação):**
 ```
-https://torcidafazop.com.br
+http://localhost:5173
 ```
 
-### **4. Salvar as Configurações**
+**Site URL (para desenvolvimento):**
+```
+http://localhost:5173
+```
+
+### **4. Configurar Site URL**
+- Vá para **"Authentication"** > **"URL Configuration"**
+- Em **"Site URL"**, coloque: `http://localhost:5173`
+- Em **"Redirect URLs"**, adicione: `http://localhost:5173/**`
+- Clique em **"Save"**
+
+### **5. Salvar as Configurações**
 - Clique em **"Save"** para salvar o template
 - Teste enviando um email de teste
 

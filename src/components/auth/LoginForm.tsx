@@ -53,14 +53,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSwitchToRegister }) =>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-white text-sm font-medium mb-2">
-              Email ou Username
+              Email
             </label>
             <input
               type="text"
               value={emailOrUsername}
               onChange={(e) => setEmailOrUsername(e.target.value)}
               className="w-full px-4 py-3 bg-gray-800 border border-gray-600 text-white rounded focus:outline-none focus:border-red-600"
-              placeholder="seu@email.com ou seuusername"
+              placeholder="seu@email.com"
               required
             />
           </div>
