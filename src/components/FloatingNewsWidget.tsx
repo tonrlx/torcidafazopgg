@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { X, ExternalLink, Bell } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { getRecentPosts } from '../data/blogData';
 
 const FloatingNewsWidget: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isMinimized, setIsMinimized] = useState(true);
   const [latestPost, setLatestPost] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const recentPosts = getRecentPosts(1);
@@ -29,13 +31,10 @@ const FloatingNewsWidget: React.FC = () => {
   };
 
   const handleReadComplete = () => {
-    // Redirecionar para a seção de notícias e abrir a matéria
-    window.location.href = '#news';
-    // Disparar evento para abrir a matéria específica
-    setTimeout(() => {
-      const event = new CustomEvent('openPost', { detail: { postId: latestPost.id } });
-      window.dispatchEvent(event);
-    }, 100);
+    // Navegar diretamente para a matéria específica
+    if (latestPost) {
+      navigate(`/${latestPost.category}/${latestPost.id}`);
+    }
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { blogPosts, getFeaturedPosts, BlogPost } from '../../data/blogData';
 
 
@@ -6,12 +7,23 @@ const NewsSection: React.FC = () => {
   const [expandedPost, setExpandedPost] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<BlogPost['category'] | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   // Função para converter markdown simples para HTML
   const formatContent = (content: string) => {
     return content
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br />');
+  };
+
+  // Função para gerar URL da matéria
+  const getArticleUrl = (post: BlogPost) => {
+    return `/${post.category}/${post.id}`;
+  };
+
+  // Função para navegar para a matéria
+  const handleReadArticle = (post: BlogPost) => {
+    navigate(getArticleUrl(post));
   };
 
   const getCategoryLabel = (category: BlogPost['category']) => {

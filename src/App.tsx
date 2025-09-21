@@ -8,6 +8,8 @@ import LoginForm from './components/auth/LoginForm';
 import RegisterForm from './components/auth/RegisterForm';
 import AuthCallback from './components/auth/AuthCallback';
 import UserAvatar from './components/UserAvatar';
+import ArticlePage from './components/ArticlePage';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 // import ModerationMessage from './components/ModerationMessage';
 // import ModerationPanel from './components/ModerationPanel';
 // import SeloP from './components/SeloP';
@@ -22,9 +24,15 @@ function AppContent() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   // const [showModerationPanel, setShowModerationPanel] = useState(false);
+  const location = useLocation();
 
   // Verificar se estamos na rota de callback de autenticação
-  const isAuthCallback = window.location.pathname === '/auth/callback';
+  const isAuthCallback = location.pathname === '/auth/callback';
+  
+  // Verificar se estamos em uma rota de artigo
+  const isArticleRoute = location.pathname.startsWith('/noticia/') || 
+                        location.pathname.startsWith('/opiniao/') || 
+                        location.pathname.startsWith('/analise/');
 
   const handleTabChangeWithMenu = (tab: string) => {
     handleTabChange(tab);
@@ -34,6 +42,11 @@ function AppContent() {
   // Se estivermos na rota de callback, renderizar apenas o componente de callback
   if (isAuthCallback) {
     return <AuthCallback />;
+  }
+
+  // Se estivermos em uma rota de artigo, renderizar apenas o componente de artigo
+  if (isArticleRoute) {
+    return <ArticlePage />;
   }
 
   return (
@@ -332,9 +345,11 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </Router>
   );
 }
 
