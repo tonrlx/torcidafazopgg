@@ -10,7 +10,7 @@ export default defineConfig({
     sourcemap: false,
     minify: 'terser',
   },
-  base: './',
+  base: '/',
   server: {
     port: 5173,
     host: true,

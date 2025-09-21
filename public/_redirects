@@ -1,3 +1,8 @@
 # Netlify redirects for SPA
 /*    /index.html   200
 
+# Fallback for all routes
+/noticia/*    /index.html   200
+/opiniao/*    /index.html   200
+/analise/*    /index.html   200
+
