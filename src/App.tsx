@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginForm from './components/auth/LoginForm';
 import RegisterForm from './components/auth/RegisterForm';
+import AuthCallback from './components/auth/AuthCallback';
 import UserAvatar from './components/UserAvatar';
 // import ModerationMessage from './components/ModerationMessage';
 // import ModerationPanel from './components/ModerationPanel';
@@ -22,10 +23,18 @@ function AppContent() {
   const [showRegister, setShowRegister] = useState(false);
   // const [showModerationPanel, setShowModerationPanel] = useState(false);
 
+  // Verificar se estamos na rota de callback de autenticação
+  const isAuthCallback = window.location.pathname === '/auth/callback';
+
   const handleTabChangeWithMenu = (tab: string) => {
     handleTabChange(tab);
     closeMenu();
   };
+
+  // Se estivermos na rota de callback, renderizar apenas o componente de callback
+  if (isAuthCallback) {
+    return <AuthCallback />;
+  }
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
