@@ -82,18 +82,20 @@ CONFIRMAÇÃO TORCIDAFAZOP
 
 **Redirect URL (após confirmação):**
 ```
-http://localhost:5173
+https://torcidafazop.com.br/auth/callback
 ```
 
-**Site URL (para desenvolvimento):**
+**Site URL (para produção):**
 ```
-http://localhost:5173
+https://torcidafazop.com.br
 ```
 
 ### **4. Configurar Site URL**
 - Vá para **"Authentication"** > **"URL Configuration"**
-- Em **"Site URL"**, coloque: `http://localhost:5173`
-- Em **"Redirect URLs"**, adicione: `http://localhost:5173/**`
+- Em **"Site URL"**, coloque: `https://torcidafazop.com.br`
+- Em **"Redirect URLs"**, adicione:
+  - `https://torcidafazop.com.br/**` (produção)
+  - `http://localhost:5173/**` (desenvolvimento)
 - Clique em **"Save"**
 
 ### **5. Salvar as Configurações**

@@ -95,7 +95,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`
+        emailRedirectTo: process.env.NODE_ENV === 'production' 
+          ? 'https://torcidafazop.com.br/auth/callback'
+          : `${window.location.origin}/auth/callback`
       }
     })
 
