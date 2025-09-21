@@ -1,39 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { blogPosts, getFeaturedPosts, BlogPost } from '../../data/blogData';
-import { Twitter, Instagram, ArrowLeft } from 'lucide-react';
 
-// Dados dos autores
-const authors = {
-  'Redação TFP': {
-    name: 'Redação TFP',
-    avatar: '/images/PERFIL TOT.jpeg',
-    twitter: 'https://twitter.com/torcida_faz_p',
-    instagram: 'https://instagram.com/torcida_faz_p'
-  },
-  'Analista TFP': {
-    name: 'Analista TFP',
-    avatar: '/images/PERFIL PAIN GAMING.jpeg',
-    twitter: 'https://twitter.com/torcida_faz_p',
-    instagram: 'https://instagram.com/torcida_faz_p'
-  },
-  'Equipe de Análise TFP': {
-    name: 'Equipe de Análise TFP',
-    avatar: '/images/PERFIL PAIN GAMING.jpeg',
-    twitter: 'https://twitter.com/torcida_faz_p',
-    instagram: 'https://instagram.com/torcida_faz_p'
-  },
-  'Editorial TFP': {
-    name: 'Editorial TFP',
-    avatar: '/images/PERFIL TOT.jpeg',
-    twitter: 'https://twitter.com/torcida_faz_p',
-    instagram: 'https://instagram.com/torcida_faz_p'
-  }
-};
 
 const NewsSection: React.FC = () => {
   const [expandedPost, setExpandedPost] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<BlogPost['category'] | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Função para converter markdown simples para HTML
+  const formatContent = (content: string) => {
+    return content
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br />');
+  };
 
   const getCategoryLabel = (category: BlogPost['category']) => {
     switch (category) {
@@ -63,30 +42,42 @@ const NewsSection: React.FC = () => {
 
   const featuredPosts = getFeaturedPosts();
 
+  // Listener para abrir post específico vindo do widget
+  useEffect(() => {
+    const handleOpenPost = (event: CustomEvent) => {
+      const { postId } = event.detail;
+      setExpandedPost(postId);
+    };
+
+    window.addEventListener('openPost', handleOpenPost as EventListener);
+    
+    return () => {
+      window.removeEventListener('openPost', handleOpenPost as EventListener);
+    };
+  }, []);
+
   // Se há um post expandido, mostrar em tela cheia
   if (expandedPost) {
     const post = blogPosts.find(p => p.id === expandedPost);
     if (!post) return null;
 
-    const author = authors[post.author as keyof typeof authors] || authors['Redação TFP'];
-
   return (
       <div className="min-h-screen bg-black text-white">
 
         {/* Conteúdo do artigo */}
-        <main className="container mx-auto px-4 py-8 max-w-4xl">
+        <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8 max-w-4xl">
           {/* Título */}
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
             {post.title}
           </h1>
 
-          {/* Imagem do artigo */}
+          {/* Imagem do artigo - Responsiva para mobile */}
           {post.image && (
-            <div className="mb-8">
+            <div className="mb-6 md:mb-8">
               <img
                 src={post.image}
                 alt={post.title}
-                className="w-full h-64 md:h-96 object-cover rounded-lg border border-gray-600"
+                className="w-full h-48 sm:h-56 md:h-80 lg:h-[450px] object-cover rounded-lg border border-gray-600"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
@@ -95,67 +86,52 @@ const NewsSection: React.FC = () => {
           )}
 
           {/* Categoria e tags */}
-          <div className="flex items-center gap-4 mb-8">
-            <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(post.category)}`}>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-6 md:mb-8">
+            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold ${getCategoryColor(post.category)}`}>
               {getCategoryLabel(post.category)}
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               {post.tags.map((tag) => (
-                <span key={tag} className="px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">
+                <span key={tag} className="px-1 sm:px-2 py-1 bg-gray-800 rounded text-xs text-gray-300">
                   #{tag}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* Layout com conteúdo e perfil do autor */}
-          <div className="flex gap-8">
-            {/* Conteúdo do artigo */}
-            <div className="flex-1">
-              <div className="prose prose-lg max-w-none">
-                <div className="text-white leading-relaxed text-lg whitespace-pre-line">
-                  {post.content}
-                </div>
-              </div>
-            </div>
-
-            {/* Mini perfil do autor - lado direito */}
-            <div className="w-64 flex-shrink-0">
-              <div className="bg-gray-900 p-4 rounded-lg border border-gray-600 sticky top-24">
-                <div className="flex items-center gap-3 mb-3">
-                  <img
-                    src={author.avatar}
-                    alt={author.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-red-600"
-                    onError={(e) => {
-                      e.currentTarget.src = '/images/PERFIL TOT.jpeg';
-                    }}
-                  />
-                  <div>
-                    <h3 className="text-lg font-bold text-white">{author.name}</h3>
-                    <p className="text-gray-400 text-xs">
-                      {new Date(post.publishedAt).toLocaleDateString('pt-BR')}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2">
+          {/* Conteúdo do artigo */}
+          <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none">
+            <div 
+              className="text-white leading-relaxed text-sm sm:text-base md:text-lg"
+              dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
+            />
+            
+            {/* Footer da matéria */}
+            <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-700">
+              <div className="text-center mb-4 md:mb-6">
+                <p className="text-gray-400 text-xs sm:text-sm mb-3 md:mb-4">
+                  <strong className="text-white">Torcida Faz o P</strong> • {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} • {new Date().toLocaleDateString('pt-BR')}
+                </p>
+                
+                {/* Botões das redes sociais */}
+                <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
                   <a
-                    href={author.twitter}
+                    href="https://instagram.com/torcida_faz_p"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors text-center"
-                    title="Twitter"
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
+                    style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
                   >
-                    <Twitter size={16} className="text-white mx-auto" />
+                    INSTAGRAM
                   </a>
                   <a
-                    href={author.instagram}
+                    href="https://twitter.com/torcida_faz_p"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 p-2 bg-red-500 hover:bg-red-600 rounded-lg transition-colors text-center"
-                    title="Instagram"
+                    className="bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
+                    style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
                   >
-                    <Instagram size={16} className="text-white mx-auto" />
+                    TWITTER
                   </a>
                 </div>
               </div>
@@ -302,12 +278,12 @@ const NewsSection: React.FC = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {filteredPosts.map((post) => (
               <div key={post.id} className="bg-black border border-gray-600 hover:border-red-600 transition-colors duration-300">
                 {/* Versão minimizada */}
                 {expandedPost !== post.id && (
-                  <div className="p-4">
+                  <div className="p-3 sm:p-4">
                     <div className="space-y-3">
                       {/* Categoria */}
                       <div className="flex items-center gap-2">
@@ -316,9 +292,9 @@ const NewsSection: React.FC = () => {
                         </span>
                       </div>
 
-                      {/* Foto pequena */}
+                      {/* Foto pequena - Formato 16:9 */}
                       {post.image && (
-                        <div className="w-full h-32 overflow-hidden rounded">
+                        <div className="w-full aspect-video overflow-hidden rounded">
                           <img
                             src={post.image}
                             alt={post.title}
@@ -335,14 +311,14 @@ const NewsSection: React.FC = () => {
                         onClick={() => setExpandedPost(post.id)}
                         className="text-left w-full"
                       >
-                        <h3 className="text-sm font-bold text-white hover:text-red-600 transition-colors duration-300 mb-2 line-clamp-2">
+                        <h3 className="text-xs sm:text-sm font-bold text-white hover:text-red-600 transition-colors duration-300 mb-2 line-clamp-2">
                           {post.title}
                         </h3>
                       </button>
 
                       {/* 3 linhas de prévia */}
                       <div className="text-gray-300 text-xs leading-relaxed">
-                        <p className="line-clamp-3">{post.excerpt}</p>
+                        <p className="line-clamp-2 sm:line-clamp-3">{post.excerpt}</p>
                       </div>
 
                       {/* Por: Usuário */}

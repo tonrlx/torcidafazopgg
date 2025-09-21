@@ -29,9 +29,13 @@ const FloatingNewsWidget: React.FC = () => {
   };
 
   const handleReadComplete = () => {
-    // Simular abertura da notícia completa
-    // Em uma implementação real, isso abriria o modal de notícia
-    console.log('Abrir notícia:', latestPost.id);
+    // Redirecionar para a seção de notícias e abrir a matéria
+    window.location.href = '#news';
+    // Disparar evento para abrir a matéria específica
+    setTimeout(() => {
+      const event = new CustomEvent('openPost', { detail: { postId: latestPost.id } });
+      window.dispatchEvent(event);
+    }, 100);
   };
 
   return (
@@ -80,9 +84,9 @@ const FloatingNewsWidget: React.FC = () => {
           <div className="relative p-3 transition-all duration-1000">
             {latestPost ? (
               <>
-                {/* Image */}
+                {/* Image - Formato 16:9 */}
                 {latestPost.image && (
-                  <div className="w-full h-24 mb-2 rounded overflow-hidden transition-all duration-1000">
+                  <div className="w-full aspect-video mb-2 rounded overflow-hidden transition-all duration-1000">
                     <img
                       src={latestPost.image}
                       alt={latestPost.title}
