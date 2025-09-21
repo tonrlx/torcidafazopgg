@@ -14,7 +14,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: 'pain-ffws-br-penultima-semana',
-    title: 'No melhor dia do split, paiN Gaming encerra penúltima semana do FFWS BR',
+    title: 'No melhor dia do split, paiN Gaming encerra penúltima rodada do FFWS BR',
     excerpt: 'a paiN chegou à 42ª queda ocupando a 5ª colocação geral, com um total de 499 pontos e 260 eliminações até aqui.',
     content: `A equipe de Free Fire Mobile da paiN Gaming registrou neste sábado (20) sua melhor atuação no atual split do FFWS Brasil. O time encerrou a penúltima rodada da fase classificatória com 87 pontos conquistados e 56 eliminações, desempenho coroado por um Booyah na última queda do dia.
 

@@ -140,7 +140,7 @@ const ChatBot: React.FC = () => {
     // Respostas sobre Torcida Faz o P
     if (input.includes('torcida') || input.includes('faz o p') || input.includes('fazop') || input.includes('tfp')) {
       return {
-        text: 'Torcida Faz o P é a nossa paixão! ❤️\n\nSiga a gente nas redes:\n\n📱 Instagram: https://www.instagram.com/torcidafazop_/\n🐦 Twitter: https://x.com/torcidafazop\n\nVamos juntos fazer o P! 🔥',
+        text: 'Torcida Faz o P é a nossa paixão! ❤️\n\nSiga a gente nas redes:\n\n📱 Instagram: https://www.instagram.com/torcidafazop_?igsh=aDd0dHE3dm5rMm5y\n🐦 Twitter: https://x.com/torcidafazop?s=21\n\nVamos juntos fazer o P! 🔥',
         type: 'community'
       };
     }
@@ -195,7 +195,7 @@ const ChatBot: React.FC = () => {
 
     // Resposta padrão para perguntas não reconhecidas
     return {
-      text: 'Desculpa, não consegui entender sua pergunta! 😅\n\nMas você pode entrar em contato com a Torcida Faz o P:\n\n📱 Instagram: https://www.instagram.com/torcidafazop_/\n🐦 Twitter: https://x.com/torcidafazop\n\nA galera vai te ajudar!',
+      text: 'Desculpa, não consegui entender sua pergunta! 😅\n\nMas você pode entrar em contato com a Torcida Faz o P:\n\n📱 Instagram: https://www.instagram.com/torcidafazop_?igsh=aDd0dHE3dm5rMm5y\n🐦 Twitter: https://x.com/torcidafazop?s=21\n\nA galera vai te ajudar!',
       type: 'community'
     };
   };

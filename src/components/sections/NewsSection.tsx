@@ -21,10 +21,6 @@ const NewsSection: React.FC = () => {
     return `/${post.category}/${post.id}`;
   };
 
-  // Função para navegar para a matéria
-  const handleReadArticle = (post: BlogPost) => {
-    navigate(getArticleUrl(post));
-  };
 
   const getCategoryLabel = (category: BlogPost['category']) => {
     switch (category) {
@@ -128,7 +124,7 @@ const NewsSection: React.FC = () => {
                 {/* Botões das redes sociais */}
                 <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
                   <a
-                    href="https://instagram.com/torcida_faz_p"
+                    href="https://www.instagram.com/torcidafazop_?igsh=aDd0dHE3dm5rMm5y"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
@@ -137,7 +133,7 @@ const NewsSection: React.FC = () => {
                     INSTAGRAM
                   </a>
                   <a
-                    href="https://twitter.com/torcida_faz_p"
+                    href="https://x.com/torcidafazop?s=21"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"

@@ -59,23 +59,16 @@ const ArticlePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header com botão voltar */}
-      <header className="bg-black border-b border-gray-800 py-4">
-        <div className="container mx-auto px-4 flex items-center gap-4">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
-          >
-            <ArrowLeft size={20} />
-            <span>Voltar</span>
-          </button>
-          <div className="h-6 w-px bg-gray-600"></div>
-          <span className="text-sm text-gray-400">REDAÇÃO TFP</span>
-        </div>
-      </header>
+      {/* Botão voltar fixo no canto superior esquerdo */}
+      <button
+        onClick={() => navigate('/')}
+        className="fixed top-4 left-4 z-50 flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 bg-black bg-opacity-50 hover:bg-opacity-70 p-2 rounded-lg"
+      >
+        <ArrowLeft size={20} />
+      </button>
 
       {/* Conteúdo do artigo */}
-      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8 max-w-4xl">
+      <main className="container mx-auto px-3 sm:px-4 pt-4 pb-4 sm:pb-6 md:pb-8 max-w-4xl">
         {/* Título */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
           {post.title}
@@ -123,27 +116,27 @@ const ArticlePage: React.FC = () => {
                 <strong className="text-white">Torcida Faz o P</strong> • {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} • {new Date().toLocaleDateString('pt-BR')}
               </p>
               
-              {/* Botões das redes sociais */}
-              <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-                <a
-                  href="https://instagram.com/torcida_faz_p"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
-                  style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
-                >
-                  INSTAGRAM
-                </a>
-                <a
-                  href="https://twitter.com/torcida_faz_p"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
-                  style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
-                >
-                  TWITTER
-                </a>
-              </div>
+                {/* Botões das redes sociais */}
+                <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
+                  <a
+                    href="https://www.instagram.com/torcidafazop_?igsh=aDd0dHE3dm5rMm5y"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
+                    style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
+                  >
+                    INSTAGRAM
+                  </a>
+                  <a
+                    href="https://x.com/torcidafazop?s=21"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 sm:py-3 sm:px-6 text-sm sm:text-base transition-colors duration-300"
+                    style={{ clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)' }}
+                  >
+                    TWITTER
+                  </a>
+                </div>
             </div>
           </div>
         </div>
