@@ -80,9 +80,7 @@ O SQL Editor do Supabase só aceita comandos SQL, não Markdown (```).
 ### 4. **Configure as URLs**
 - Vá para **"Authentication"** > **"URL Configuration"**
 - Em **"Site URL"**, coloque: `https://torcidafazop.com.br`
-- Em **"Redirect URLs"**, adicione:
-  - `https://torcidafazop.com.br/**`
-  - `http://localhost:5173/**`
+- Em **"Redirect URLs"**, adicione: `https://torcidafazop.com.br/**`
 
 ### 5. **Salve as Configurações**
 - Clique em **"Save"** em todas as páginas

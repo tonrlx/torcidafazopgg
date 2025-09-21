@@ -5,7 +5,7 @@
 SELECT 
     'Site URL' as configuracao,
     'https://torcidafazop.com.br' as valor_producao,
-    'http://localhost:5173' as valor_desenvolvimento;
+    'https://torcidafazop.com.br' as valor_desenvolvimento;
 
 -- 2. Verificar tabelas de usuários
 SELECT COUNT(*) as total_usuarios FROM auth.users;

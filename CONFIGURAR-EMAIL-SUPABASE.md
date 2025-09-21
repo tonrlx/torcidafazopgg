@@ -85,7 +85,7 @@ CONFIRMAÇÃO TORCIDAFAZOP
 https://torcidafazop.com.br/auth/callback
 ```
 
-**Site URL (para produção):**
+**Site URL (produção e desenvolvimento):**
 ```
 https://torcidafazop.com.br
 ```
@@ -93,9 +93,7 @@ https://torcidafazop.com.br
 ### **4. Configurar Site URL**
 - Vá para **"Authentication"** > **"URL Configuration"**
 - Em **"Site URL"**, coloque: `https://torcidafazop.com.br`
-- Em **"Redirect URLs"**, adicione:
-  - `https://torcidafazop.com.br/**` (produção)
-  - `http://localhost:5173/**` (desenvolvimento)
+- Em **"Redirect URLs"**, adicione: `https://torcidafazop.com.br/**`
 - Clique em **"Save"**
 
 ### **5. Salvar as Configurações**
