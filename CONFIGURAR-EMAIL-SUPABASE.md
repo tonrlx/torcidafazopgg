@@ -11,7 +11,7 @@
 
 **Título do Email:**
 ```
-CONFIRMAÇÃO TORCIDAFAZOP
+Torcida Faz o P
 ```
 
 **Conteúdo do Email (HTML):**
@@ -20,41 +20,41 @@ CONFIRMAÇÃO TORCIDAFAZOP
 <html>
 <head>
     <meta charset="utf-8">
-    <title>CONFIRMAÇÃO TORCIDAFAZOP</title>
+    <title>Torcida Faz o P</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
-            background-color: #000; 
-            color: #fff; 
+            background-color: #f5f5f5; 
+            color: #333; 
             margin: 0; 
-            padding: 20px; 
+            padding: 40px 20px; 
             text-align: center;
         }
         .container { 
-            max-width: 400px; 
+            max-width: 500px; 
             margin: 0 auto; 
-            background-color: #111; 
-            border: 2px solid #ff0000; 
-            border-radius: 10px; 
-            padding: 40px 20px; 
+            background-color: #fff; 
+            border-radius: 12px; 
+            padding: 50px 30px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         .logo { 
             color: #ff0000; 
-            font-size: 28px; 
+            font-size: 32px; 
             font-weight: bold; 
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
         }
         .button { 
             background-color: #ff0000; 
             color: white; 
-            padding: 20px 40px; 
+            padding: 16px 32px; 
             text-decoration: none; 
             border-radius: 8px; 
             display: inline-block; 
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
         }
         .button:hover {
             background-color: #cc0000;
@@ -63,11 +63,9 @@ CONFIRMAÇÃO TORCIDAFAZOP
 </head>
 <body>
     <div class="container">
-        <div class="logo">🔥 TORCIDA FAZ O P</div>
+        <div class="logo">Torcida Faz o P</div>
         
-        <div style="text-align: center;">
-            <a href="{{ .ConfirmationURL }}" class="button">CONFIRMAR E-MAIL</a>
-        </div>
+        <a href="{{ .ConfirmationURL }}" class="button">Confirmar Email</a>
     </div>
 </body>
 </html>
@@ -77,7 +75,7 @@ CONFIRMAÇÃO TORCIDAFAZOP
 
 **Subject (Assunto):**
 ```
-CONFIRMAÇÃO TORCIDAFAZOP
+Torcida Faz o P - Confirmação de Email
 ```
 
 **Redirect URL (após confirmação):**
