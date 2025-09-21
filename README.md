@@ -131,7 +131,6 @@ Para contribuir com o projeto:
 
 - **Instagram**: [@torcidafazop_](https://instagram.com/torcidafazop_)
 - **Twitter**: [@torcidafazop](https://twitter.com/torcidafazop)
-- **Criado por**: Adailton "Ton" Serra (@tonrlx) - 26/08/2024
 
 ---
 
