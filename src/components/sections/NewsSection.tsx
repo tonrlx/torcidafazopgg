@@ -5,7 +5,7 @@ import { blogPosts, getFeaturedPosts, BlogPost } from '../../data/blogData';
 
 const NewsSection: React.FC = () => {
   const [expandedPost, setExpandedPost] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<BlogPost['category'] | 'all'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<BlogPost['category']>('noticia');
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const NewsSection: React.FC = () => {
   };
 
   const filteredPosts = blogPosts.filter(post => {
-    const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
+    const matchesCategory = post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -161,16 +161,6 @@ const NewsSection: React.FC = () => {
       {/* Filtros */}
       <div className="mb-8 space-y-4">
         <div className="flex flex-wrap gap-2 justify-center">
-          <button
-            onClick={() => setSelectedCategory('all')}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-              selectedCategory === 'all' 
-                ? 'bg-red-600 text-white' 
-                : 'bg-black text-gray-300 hover:bg-red-600 border border-red-600'
-            }`}
-          >
-            Todas
-          </button>
           <button
             onClick={() => setSelectedCategory('noticia')}
             className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
