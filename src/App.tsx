@@ -16,8 +16,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { useModeration } from './hooks/useModeration';
 import { useState } from 'react';
 
-function AppContent() {
-  const { activeTab, isTransitioning, handleTabChange } = useTabNavigation();
+interface AppContentProps {
+  initialTab?: string;
+}
+
+function AppContent({ initialTab = 'home' }: AppContentProps) {
+  const { activeTab, isTransitioning, handleTabChange } = useTabNavigation(initialTab);
   const { isMenuOpen, setIsMenuOpen, closeMenu } = useMenu();
   const { user, profile, signOut } = useAuth();
   // const { moderationStatus, isModerator } = useModeration();
@@ -333,6 +337,10 @@ function App() {
           <Route path="/noticia/:slug" element={<ArticlePage />} />
           <Route path="/opiniao/:slug" element={<ArticlePage />} />
           <Route path="/analise/:slug" element={<ArticlePage />} />
+          <Route path="/news" element={<AppContent initialTab="news" />} />
+          <Route path="/lines" element={<AppContent initialTab="lines" />} />
+          <Route path="/loja" element={<AppContent initialTab="sou-pain" />} />
+          <Route path="/agenda" element={<AppContent initialTab="agenda" />} />
           <Route path="/*" element={<AppContent />} />
         </Routes>
       </AuthProvider>
